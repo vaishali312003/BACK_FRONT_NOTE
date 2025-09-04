@@ -1,6 +1,5 @@
 # render.yaml - Full Stack Smart Notes App Configuration
 # Place this file in your PROJECT ROOT (D:\smart-notes-app\)
-
 services:
   # Backend API Service (Python/FastAPI)
   - type: web
@@ -9,11 +8,10 @@ services:
     plan: free
     rootDir: ./backend
     buildCommand: pip install -r requirements.txt
-    startCommand: python main.py
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /health
     env:
-      - key: PORT
-        value: 8000
+      # Remove manual PORT setting; Render injects it automatically
       - key: DATABASE_URL
         fromDatabase:
           name: smart-notes-db
@@ -25,7 +23,7 @@ services:
           property: url
       - key: ENVIRONMENT
         value: production
-      # Add your API keys manually in Render dashboard
+      # API keys must be added manually on Render dashboard
       - key: OPENAI_API_KEY
         sync: false
       - key: PINECONE_API_KEY
