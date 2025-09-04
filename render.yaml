@@ -10,4 +10,3 @@ services:
     env:
       - key: ENVIRONMENT
         value: production
-
